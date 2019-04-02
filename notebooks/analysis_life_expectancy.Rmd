@@ -1,0 +1,42 @@
+---
+title: "Analysis of Life Expectancy"
+author: "Alexandra Hinton"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(here)
+library(ggplot2)
+library(tidyverse)
+```
+
+## Analysis of Life Expectancy by Continent
+
+We hypothesize that life expectancy is a funciton of time and location.
+This analysis attempts to check that relationship. 
+
+[Link to the github repository](https://github.com/ahinton-mmc/2019-04-02-carpentries-mmc)
+
+```{r, echo=FALSE, message=FALSE}
+gapminder <- readr::read_csv(here("data/gapminder/raw/gapminder_data.csv"))
+```
+```{r, echo=FALSE}
+# Plot
+  gapminder %>% 
+    filter(continent=="Africa") %>% 
+  ggplot(aes(x=year, y=lifeExp, color = continent)) +
+  geom_line() +
+    facet_wrap( ~ country)
+
+# Make a plot of population over time
+gapminder %>% 
+  filter(continent == "Asia") %>% 
+  ggplot(aes(x = year, y = pop, group = country, color = country)) +
+  geom_line()
+
+```
+
+# Details
+The data consist of years from `r range(gapminder$year)`. 
+# ctrl shift K will knit 
